@@ -1,0 +1,6 @@
+/RetryOrgsLogger/bin/**/*
+/RetryOrgsLogger/obj/**/*
+/RetryOrgsLogger/.vscode/**/*
+/RetryOrgsLogger/.vs/**/*
+/RetryOrgsLogger/Migrations
+/.vs/**/*
