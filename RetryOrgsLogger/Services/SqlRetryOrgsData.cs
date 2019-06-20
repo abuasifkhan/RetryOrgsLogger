@@ -25,7 +25,7 @@ namespace RetryOrgsLogger.Services
 
         public RetryOrg Get(string Geo, Guid organizationId)
         {
-            return _context.RetryOrgs.FirstOrDefault(r => r.Geo == Geo && r.OrganizationId == organizationId);
+            return _context.RetryOrgs.FirstOrDefault(r => r.Geo == Geo && r.organizationId == organizationId);
         }
 
         public IEnumerable<RetryOrg> GetAll()

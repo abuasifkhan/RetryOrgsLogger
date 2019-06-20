@@ -19,7 +19,7 @@ namespace RetryOrgsLogger.Model
         [Key, Column(Order = 0)]
         public string Geo { get; set; }
         [Key, Column(Order = 1)]
-        public Guid OrganizationId { get; set; }
+        public Guid organizationId { get; set; }
         public DateTime PreciseTimeStamp { get; set; }
         public string SolutionName { get; set; }
         public string ErrorMessage { get; set; }

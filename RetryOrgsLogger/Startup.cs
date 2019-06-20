@@ -35,11 +35,17 @@ namespace RetryOrgsLogger
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.Run(async (context) =>
+            else
             {
-                await context.Response.WriteAsync("Hello World!");
-            });
+                app.UseExceptionHandler();
+            }
+
+            //app.Run(async (context) =>
+            //{
+            //    await context.Response.WriteAsync("Hello World!");
+            //});
+            app.UseHttpMethodOverride();
+            app.UseMvc();
         }
     }
 }
