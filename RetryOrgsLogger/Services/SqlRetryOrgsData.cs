@@ -17,7 +17,7 @@ namespace RetryOrgsLogger.Services
         }
         public RetryOrg Add(RetryOrg newRetryOrg)
         {
-            if (_context.RetryOrgs.Any(r => r.Geo == newRetryOrg.Geo && r.organizationId == newRetryOrg.organizationId))
+            if (_context.RetryOrgs.Any(r => r.Geo == newRetryOrg.Geo && r.OrganizationId == newRetryOrg.OrganizationId))
             {
                 return Update(newRetryOrg);
             }
@@ -32,7 +32,7 @@ namespace RetryOrgsLogger.Services
 
         public RetryOrg Get(string Geo, Guid organizationId)
         {
-            return _context.RetryOrgs.FirstOrDefault(r => r.Geo == Geo && r.organizationId == organizationId);
+            return _context.RetryOrgs.FirstOrDefault(r => r.Geo == Geo && r.OrganizationId == organizationId);
         }
 
         public IEnumerable<RetryOrg> GetAll()
@@ -43,7 +43,7 @@ namespace RetryOrgsLogger.Services
         public RetryOrg Update(RetryOrg newRetryOrg)
         {
             // Update only if the timestamp is updated
-            var previousData = Get(newRetryOrg.Geo, newRetryOrg.organizationId);
+            var previousData = Get(newRetryOrg.Geo, newRetryOrg.OrganizationId);
             if(previousData.PreciseTimeStamp < newRetryOrg.PreciseTimeStamp)
             {
                 _context.Attach(newRetryOrg).State = Microsoft.EntityFrameworkCore.EntityState.Modified;

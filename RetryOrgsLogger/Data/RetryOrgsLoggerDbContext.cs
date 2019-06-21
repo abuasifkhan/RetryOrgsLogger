@@ -20,7 +20,7 @@ namespace RetryOrgsLogger.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<RetryOrg>()
-                .HasKey(c => new { c.Geo, c.organizationId });
+                .HasKey(c => new { c.Geo, c.OrganizationId });
         }
     }
     public class RetryOrgsLoggerDbFactory : IDesignTimeDbContextFactory<RetryOrgsLoggerDbContext>
