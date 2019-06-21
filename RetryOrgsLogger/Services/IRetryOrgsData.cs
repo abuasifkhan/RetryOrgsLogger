@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace RetryOrgsLogger.Services
 {
-    interface IRetryOrgsData
+    public interface IRetryOrgsData
     {
         IEnumerable<RetryOrg> GetAll();
         RetryOrg Get(string Geo, Guid organizationId);
         RetryOrg Add(RetryOrg newRetryOrg);
-        RetryOrg Update(string Geo, Guid organizationId);
+        RetryOrg Update(RetryOrg newRetryOrg);
     }
 }

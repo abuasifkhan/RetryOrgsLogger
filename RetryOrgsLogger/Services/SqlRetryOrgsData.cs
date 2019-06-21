@@ -17,8 +17,15 @@ namespace RetryOrgsLogger.Services
         }
         public RetryOrg Add(RetryOrg newRetryOrg)
         {
-            _context.RetryOrgs.Add(newRetryOrg);
-            _context.SaveChanges();
+            if (_context.RetryOrgs.Any(r => r.Geo == newRetryOrg.Geo && r.organizationId == newRetryOrg.organizationId))
+            {
+                return Update(newRetryOrg);
+            }
+            else
+            {
+                _context.RetryOrgs.Add(newRetryOrg);
+                _context.SaveChanges();
+            }
 
             return newRetryOrg;
         }
@@ -33,9 +40,17 @@ namespace RetryOrgsLogger.Services
             return _context.RetryOrgs.OrderBy(r => r.Geo);
         }
 
-        public RetryOrg Update(string Geo, Guid organizationId)
+        public RetryOrg Update(RetryOrg newRetryOrg)
         {
-            throw new NotImplementedException();
+            // Update only if the timestamp is updated
+            var previousData = Get(newRetryOrg.Geo, newRetryOrg.organizationId);
+            if(previousData.PreciseTimeStamp < newRetryOrg.PreciseTimeStamp)
+            {
+                _context.Attach(newRetryOrg).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                _context.SaveChanges();
+            }
+
+            return newRetryOrg;
         }
     }
 }

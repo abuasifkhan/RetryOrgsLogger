@@ -22,6 +22,8 @@ namespace RetryOrgsLogger.Model
         public Guid organizationId { get; set; }
         public DateTime PreciseTimeStamp { get; set; }
         public string SolutionName { get; set; }
-        public string ErrorMessage { get; set; }
+        public string SolutionVersion { get; set; }
+        public string SolutionImportError { get; set; }
+        public string Exception { get; set; }
     }
 }

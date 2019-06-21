@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using RetryOrgsLogger.Model;
+using RetryOrgsLogger.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,25 +17,32 @@ namespace RetryOrgsLogger.Controllers
     [Route("api/[controller]")]
     public class LogSingleRetryOrgController : Controller
     {
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        private IRetryOrgsData _retryOrgData;
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        public LogSingleRetryOrgController(IRetryOrgsData retryOrgData)
         {
-            return "value";
+            _retryOrgData = retryOrgData;
         }
+        //// GET: api/<controller>
+        //[HttpGet]
+        //public IEnumerable<RetryOrg> Get()
+        //{
+        //    return _retryOrgData.GetAll();
+        //}
+
+        //// GET api/<controller>/5
+        //[HttpGet("{id}")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
 
         // POST api/<controller>
         [HttpPost]
         public void Post([FromBody]JObject value)
         {
             RetryOrg retryOrg = JsonConvert.DeserializeObject<RetryOrg>(value.ToString(Formatting.None));
+            _retryOrgData.Add(retryOrg);
         }
 
         // PUT api/<controller>/5
