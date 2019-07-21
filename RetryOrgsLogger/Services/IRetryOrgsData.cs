@@ -12,8 +12,9 @@ namespace RetryOrgsLogger.Services
     public interface IRetryOrgsData
     {
         IEnumerable<RetryOrg> GetAll();
-        RetryOrg Get(string Geo, Guid organizationId);
+        RetryOrg Get(string geo, Guid organizationId);
         RetryOrg Add(RetryOrg newRetryOrg);
         RetryOrg Update(RetryOrg newRetryOrg);
+        RetryOrg Delete(string geo, Guid organizationId);
     }
 }

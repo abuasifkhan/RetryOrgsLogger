@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using RetryOrgsLogger.Data;
 using RetryOrgsLogger.Model;
 
@@ -30,9 +31,20 @@ namespace RetryOrgsLogger.Services
             return newRetryOrg;
         }
 
-        public RetryOrg Get(string Geo, Guid organizationId)
+        public RetryOrg Delete(string geo, Guid organizationId)
         {
-            return _context.RetryOrgs.FirstOrDefault(r => r.Geo == Geo && r.OrganizationId == organizationId);
+            var orgToDelete = Get(geo, organizationId);
+            if (orgToDelete != null)
+            {
+                _context.Attach(orgToDelete).State = EntityState.Deleted;
+                _context.SaveChanges();
+            }
+            return orgToDelete;
+        }
+
+        public RetryOrg Get(string geo, Guid organizationId)
+        {
+            return _context.RetryOrgs.FirstOrDefault(r => r.Geo == geo && r.OrganizationId == organizationId);
         }
 
         public IEnumerable<RetryOrg> GetAll()
@@ -42,9 +54,14 @@ namespace RetryOrgsLogger.Services
 
         public RetryOrg Update(RetryOrg newRetryOrg)
         {
-            // Update only if the timestamp is updated
+            // Update only if the timestamp is updated or the solutionVersion
             var previousData = Get(newRetryOrg.Geo, newRetryOrg.OrganizationId);
-            if(previousData.PreciseTimeStamp < newRetryOrg.PreciseTimeStamp)
+            if (previousData == null)
+            {
+                return newRetryOrg;
+            }
+
+            if(previousData.PreciseTimeStamp < newRetryOrg.PreciseTimeStamp || previousData.SolutionVersion != newRetryOrg.SolutionVersion)     /// TODO: Room for improvements
             {
                 _context.Attach(newRetryOrg).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 _context.SaveChanges();
